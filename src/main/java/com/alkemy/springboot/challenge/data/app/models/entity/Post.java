@@ -1,7 +1,8 @@
 package com.alkemy.springboot.challenge.data.app.models.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,10 +11,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+
+import javax.validation.constraints.NotBlank;
+
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -25,9 +25,9 @@ public class Post implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotEmpty
+	@NotBlank(message="The field 'title' no be able empty")
 	private String titulo;
-	@NotEmpty
+	@NotBlank(message="The field 'content' no be able empty")
 	private String contenido;
 
 	private String imagen;
@@ -35,15 +35,14 @@ public class Post implements Serializable {
 	
 	private String categoria;
 
-	@NotNull
+	
 	@Column(name = "create_at")
-	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy/MM/dd")
-	private Date createAt;
+	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
+	private LocalDateTime createAt;
 	
 	@PrePersist
 	public void prePersist() {
-		createAt = new Date();
+		createAt =LocalDateTime.now();
 	}
 	
 	
@@ -108,15 +107,17 @@ public class Post implements Serializable {
 
 
 
-	public Date getCreateAt() {
+	public LocalDateTime getCreateAt() {
 		return createAt;
 	}
 
 
 
-	public void setCreateAt(Date createAt) {
+	public void setCreateAt(LocalDateTime createAt) {
 		this.createAt = createAt;
 	}
+
+	
 
 
 

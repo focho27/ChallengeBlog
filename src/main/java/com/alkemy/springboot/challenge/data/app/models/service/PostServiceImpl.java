@@ -25,6 +25,7 @@ public class PostServiceImpl implements IPostService{
 	@Override
 	@Transactional
 	public void save(Post post) {
+	
 		postDao.save(post);
 		
 	}

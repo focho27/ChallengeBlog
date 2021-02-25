@@ -1,1 +1,1 @@
-INSERT INTO posts (titulo, contenido, imagen, categoria, create_at) VALUES('Pelicula', 'Harry Potter',null, null,NOW());
+INSERT INTO posts (titulo, contenido, imagen, categoria, create_at) VALUES('Movie', 'Harry Potter',null, null,NOW());
