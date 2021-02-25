@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+	<header th:replace="layout/layout :: header"></header>
+	<div class = "container py-4">
+	<h1 th:text="${titulo}"></h1>
+	
+	
+
+	<form th:action="@{/formI/}"  method="get">
+	<div class="form-group row">
+	<label for="buscarPorId" class="col-form-label"></label>
+	<input type="number" name="buscarPorId" id="buscarPorId" class="bg-secondary text-color-white" />
+	<button type="submit" class="btn btn-dark" >Search</button>
+	</div>
+	</form>
+	
+<!--'/formId/{id}'(id=$('#buscarPorId').val())-->
+
+	
+	</div>
+	
+
+
+	<div th:replace="layout/layout :: javascript"></div>
+	
+	<div></div>
+</body>
+</html>

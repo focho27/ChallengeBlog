@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+
+	<header th:replace="layout/layout :: header"></header>
+	
+	<div class="container py-4">
+
+		<div class="card bg-light">
+			<div class="card-header" th:text="${titulo}"></div>
+			<div class="card-body">
+
+
+				<div class="list-group-item">
+
+					<h6 class="col-12 col-sm-8 "
+						th:text="${'Content: ' + post.contenido}"></h6>
+					<h6 th:if="${post.imagen!=null}" class="col-12 col-sm-8 "
+						th:text="${'Content: ' + post.contenido}"></h6>
+					<h6 th:if="${post.categoria!=null}" class="col-12 col-sm-8 "
+						th:text="${'Content: ' + post.contenido}"></h6>
+					<h6 class="col-12 col-sm-8 "
+						th:text="${'Date of creation: ' + post.createAt}"></h6>
+				</div>
+				<div class="list-group-item">
+
+					<a th:href="@{'/form/'+${post.id}}"><input type="submit"
+						class="btn btn-primary col-4 col-sm-3" value="Edit"></a> 
+			<form th:action="@{'/posts/'+${post.id}}" th:method="DELETE">
+		<input type="submit" id="deletePost" name="deletePost" value="Delete" class="btn btn-danger"  >
+		</form>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+	<div class="container button-create my-2">
+		<a th:href="@{/form}"><input type="submit" value="New Post"
+			class="btn btn-dark"></a>
+	</div>
+	<div th:replace="layout/layout :: javascript"></div>
+	
+</body>
+</html>
