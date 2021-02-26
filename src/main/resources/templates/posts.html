@@ -26,10 +26,10 @@
 
 			<div th:each="post: ${posts}">
 				<div class="card-body col-12 col-sm-8 bg-dark">
-				<div class ="ms-1">
-					<h5 class="card-tittle col-12 col-sm-8 text-white"
-						th:text="${post.titulo}"></h5>
-				</div>
+					<div class="ms-1">
+						<h5 class="card-tittle col-12 col-sm-8 text-white"
+							th:text="${post.titulo}"></h5>
+					</div>
 
 					<div class="list-group">
 
@@ -68,39 +68,6 @@
 							</div>
 						</form>
 
-						<!-- <form th:action="@{'/posts/'+${post.id}}" th:method="PATCH">
-		<div class="form-group my-2">
-		<input type="text" name="patchPost" class="col-4 col-sm-3 rounded-1" th:placeholder="'Content'">
-		<button type="submit" id="patchContenido" name="patchPost" value="Contenido" class="btn btn-warning col-4 col-sm-3 text-white" >Update</button>
-		</div>
-	
-		</form>
-		<form th:action="@{'/posts/'+${post.id}}" th:method="PATCH">
-		<div class="form-group my-2">
-		
-		<input type="text" name="patchPost" class="col-4 col-sm-3 rounded-1"  th:placeholder="'Title'">
-	
-	
-		<button type="submit" id="patchTitulo" name="patchPost" value="Titulo" class="btn btn-warning col-4 col-sm-3 text-white" >Update</button>
-		
-		</div>
-		</form>
-		<form th:action="@{'/posts/'+${post.id}}" th:method="PATCH">
-		<div class="form-group my-2 row">
-		<div class="col  col-12 col-sm-3">
-		<select name="patchPost"  class="form-select"> 
-					<option value="Select">Select</option>
-					<option value="Movies" >Movies</option>
-					<option value="Sports" >Sports</option>
-					<option value="Series">Series</option>
-		</select> 
-		</div>
-		<div class="col">
-		<button type="submit" id="patchCategoria" name="patchPost" value="Categoria" class="btn btn-warning  col-4 col-sm-4 text-white" >Update</button>
-		</div>
-		</div>
-	
-		</form> -->
 
 
 

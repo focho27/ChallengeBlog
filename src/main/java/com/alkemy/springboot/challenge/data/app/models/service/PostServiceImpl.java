@@ -10,24 +10,24 @@ import com.alkemy.springboot.challenge.data.app.models.dao.IPostDao;
 import com.alkemy.springboot.challenge.data.app.models.entity.Post;
 
 @Service
-public class PostServiceImpl implements IPostService{
+public class PostServiceImpl implements IPostService {
 
 	@Autowired
 	private IPostDao postDao;
-	
+
 	@Override
 	@Transactional(readOnly = true)
 	public List<Post> findAll() {
-		
+
 		return (List<Post>) postDao.findAll();
 	}
 
 	@Override
 	@Transactional
 	public void save(Post post) {
-	
+
 		postDao.save(post);
-		
+
 	}
 
 	@Override
@@ -40,12 +40,10 @@ public class PostServiceImpl implements IPostService{
 	@Override
 	@Transactional
 	public void delete(Long id) {
-		//Luego se cambia logica
-		postDao.deleteById(id);;
-		
-	}
+		// Luego se cambia logica
+		postDao.deleteById(id);
+		;
 
-	
-	
+	}
 
 }

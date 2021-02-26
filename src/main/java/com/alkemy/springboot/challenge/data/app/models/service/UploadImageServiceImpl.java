@@ -9,7 +9,6 @@ import java.nio.file.Paths;
 
 import java.util.UUID;
 
-
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 
@@ -18,17 +17,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-
-
 @Service
-public class UploadImageServiceImpl implements IUploadImageService{
-	
+public class UploadImageServiceImpl implements IUploadImageService {
+
 	private final static String UPLOADS_FOLDER = "uploads";
-	
+
 	@Override
 	public Resource load(String file) throws MalformedURLException {
 		Path pathFoto = getPath(file);
-
 
 		Resource recurso = new UrlResource(pathFoto.toUri());
 
@@ -42,8 +38,6 @@ public class UploadImageServiceImpl implements IUploadImageService{
 	public String copy(MultipartFile file) throws IOException {
 		String uniqueFilename = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
 		Path rootPath = getPath(uniqueFilename);
-
-	
 
 		Files.copy(file.getInputStream(), rootPath);
 
@@ -79,7 +73,4 @@ public class UploadImageServiceImpl implements IUploadImageService{
 		Files.createDirectory(Paths.get(UPLOADS_FOLDER));
 	}
 
-
-
-	
 }

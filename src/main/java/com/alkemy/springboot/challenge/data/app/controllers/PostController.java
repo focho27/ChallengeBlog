@@ -1,6 +1,5 @@
 package com.alkemy.springboot.challenge.data.app.controllers;
 
-
 import java.io.IOException;
 import java.net.MalformedURLException;
 
@@ -33,7 +32,6 @@ import com.alkemy.springboot.challenge.data.app.models.entity.Post;
 import com.alkemy.springboot.challenge.data.app.models.service.IPostService;
 import com.alkemy.springboot.challenge.data.app.models.service.IUploadImageService;
 
-
 @Controller
 @SessionAttributes("post")
 public class PostController {
@@ -42,11 +40,9 @@ public class PostController {
 	private IPostService postService;
 	@Autowired
 	private IUploadImageService imageService;
-	
+
 	@GetMapping(value = "/uploads/{file:.+}")
 	public ResponseEntity<Resource> verFoto(@PathVariable String file) {
-
-		
 
 		Resource recurso = null;
 
@@ -63,7 +59,6 @@ public class PostController {
 
 	}
 
-	
 	@GetMapping(value = "/form")
 	public String crear(Map<String, Object> model) {
 
@@ -128,8 +123,8 @@ public class PostController {
 	}
 
 	@PostMapping(value = "/posts")
-	public String guardar(@Valid Post post, BindingResult result, Map<String, Object> model, @RequestParam("file") MultipartFile imagen,RedirectAttributes flash,
-			SessionStatus status) {
+	public String guardar(@Valid Post post, BindingResult result, Map<String, Object> model,
+			@RequestParam("file") MultipartFile imagen, RedirectAttributes flash, SessionStatus status) {
 
 		if (result.hasErrors()) {
 			model.put("titulo", "Form of post");
@@ -137,8 +132,7 @@ public class PostController {
 		}
 		if (!imagen.isEmpty()) {
 
-			if (post.getId() != null && post.getId() > 0 && post.getImagen() != null
-					&& post.getImagen().length() > 0) {
+			if (post.getId() != null && post.getId() > 0 && post.getImagen() != null && post.getImagen().length() > 0) {
 
 				imageService.delete(post.getImagen());
 			}
@@ -147,14 +141,13 @@ public class PostController {
 			try {
 				fileFoto = imageService.copy(imagen);
 			} catch (IOException e) {
-			
+
 				e.printStackTrace();
 			}
 			flash.addFlashAttribute("info", "Upload with success the image '" + fileFoto + "'");
 			post.setImagen(fileFoto);
 		}
 
-			
 		String mensajeFlash = (post.getId() == null) ? "Post create with success!" : "Post edit with success!";
 
 		postService.save(post);
@@ -171,11 +164,11 @@ public class PostController {
 			if (post != null) {
 
 				flash.addFlashAttribute("success", "The Post: " + post.getTitulo() + " deleted with success!");
-				
+
 				if (imageService.delete(post.getImagen())) {
 					flash.addFlashAttribute("info", "Image " + post.getImagen() + " deleted with success!");
 				}
-						
+
 				postService.delete(id);
 
 			} else {
@@ -183,84 +176,43 @@ public class PostController {
 
 			}
 		}
-		
+
 		return "redirect:/posts/";
 	}
 
 	@PatchMapping(value = "/posts/{id}")
-	public String actualizar(@PathVariable(value = "id") Long id,
-			RedirectAttributes flash,SessionStatus status,@RequestParam("file") MultipartFile imagen) {
-	/*	String contenido = ("Contenido");
-		String titulo = ("Titulo");
-		String[] resultado = null;
+	public String actualizar(@PathVariable(value = "id") Long id, RedirectAttributes flash, SessionStatus status,
+			@RequestParam("file") MultipartFile imagen) {
 		if (id > 0) {
 			Post post = postService.findOne(id);
-			if (post != null) {
+			if (!imagen.isEmpty()) {
 
-				if (campo.contains(contenido)) {
+				if (post.getImagen() != null && post.getImagen().length() > 0) {
 
-					resultado = campo.split(",");
-
-					post.setContenido(resultado[0]);
+					imageService.delete(post.getImagen());
+					flash.addFlashAttribute("info", "Deleted with success the image");
 				}
 
-				if (campo.contains(titulo)) {
+				String fileFoto = null;
+				try {
+					fileFoto = imageService.copy(imagen);
+				} catch (IOException e) {
 
-					resultado = campo.split(",");
-
-					post.setTitulo(resultado[0]);
+					e.printStackTrace();
 				}
-				if (resultado == null) {
-					if (campo.contains("Categoria")) {
-						resultado = campo.split(",");
-						if (resultado[0].contains("Series")) {
-							post.setCategoria(resultado[0].trim());
-
-						}
-						if (resultado[0].contains("Movies")) {
-							post.setCategoria(resultado[0].trim());
-						}
-						if (resultado[0].contains("Sports")) {
-							post.setCategoria(resultado[0].trim());
-						}
-						if ((resultado[0].contains("Select"))) {
-							post.setCategoria(null);
-						}
-					}
-
-				}*/
-			if (id > 0) {
-				Post post = postService.findOne(id);
-				if (!imagen.isEmpty()) {
-
-					if (post.getImagen() != null
-							&& post.getImagen().length() > 0) {
-
-						imageService.delete(post.getImagen());
-						flash.addFlashAttribute("info", "Deleted with success the image");
-					}
-
-					String fileFoto = null;
-					try {
-						fileFoto = imageService.copy(imagen);
-					} catch (IOException e) {
-					
-						e.printStackTrace();
-					}
-					flash.addFlashAttribute("info", "Upload with success the image '" + fileFoto + "'");
-					post.setImagen(fileFoto);
-				}
-				
-				
-				postService.save(post);
-				status.setComplete();
-				flash.addFlashAttribute("success", "The Post: " + post.getTitulo() + " update with success!");
-			
-			} else {
-				flash.addFlashAttribute("error", "The post solicited update not exist, try with other Id");
-
+				flash.addFlashAttribute("info", "Upload with success the image '" + fileFoto + "'");
+				post.setImagen(fileFoto);
 			}
-		
+
+			postService.save(post);
+			status.setComplete();
+			flash.addFlashAttribute("success", "The Post: " + post.getTitulo() + " update with success!");
+
+		} else {
+			flash.addFlashAttribute("error", "The post solicited update not exist, try with other Id");
+
+		}
+
 		return "redirect:/posts/";
 	}
 
