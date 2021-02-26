@@ -42,7 +42,7 @@ public class PostController {
 	private IUploadImageService imageService;
 
 	@GetMapping(value = "/uploads/{file:.+}")
-	public ResponseEntity<Resource> verFoto(@PathVariable String file) {
+	public ResponseEntity<Resource> image(@PathVariable String file) {
 
 		Resource recurso = null;
 
@@ -52,7 +52,7 @@ public class PostController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
 		return ResponseEntity.ok()
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; file=\"" + recurso.getFilename() + "\"")
 				.body(recurso);

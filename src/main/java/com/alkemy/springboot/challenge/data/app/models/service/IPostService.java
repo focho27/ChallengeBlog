@@ -14,4 +14,6 @@ public interface IPostService {
 
 	public void delete(Long id);
 
+
+	
 }
