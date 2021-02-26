@@ -27,7 +27,7 @@
 						th:text="${'Date of creation: ' + post.createAt}">	</li>
 						
 						<li class="list-group-item"> <img th:if="${(post.imagen!=null) && (post.imagen.length()>1)}" th:src="@{'/uploads/'+${post.imagen}}" 
-				th:alt="${post.imagen}" class="img-thumbnail rounded float float-right" style="max-width: 25%;"/>
+				th:alt="${post.imagen}" class="img-thumbnail rounded" style="max-width: 25%;"/>
 						</li>
 						
 						</ul>
