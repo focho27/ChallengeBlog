@@ -10,10 +10,11 @@ public interface IPostService{
 	
 	public List<Post> findAll();
 	
-	public void save(Post cliente);
+	public void save(Post post);
 	
 	public Post findOne(Long id);
 	
 	public void delete(Long id);
-
+	
+	
 }

@@ -2,44 +2,110 @@
 <html xmlns:th="http://thymeleaf.org">
 <head th:replace="layout/layout :: head"></head>
 <body>
-	<header th:replace="layout/layout :: header">	
-		</header>
+	<header th:replace="layout/layout :: header"> </header>
 
 	<h1 th:text="${titulo}"></h1>
 	<div th:if="${#lists.isEmpty(posts)}" class="alert alert-info my-4"
-		th:text="'No hay posteos asignados actualmente'"></div>
+		th:text="'There isn´t posts asigned currently'"></div>
+
+
+	<div th:if="${#lists.isEmpty(posts)}"
+		class="container button-create my-2">
+		<a th:href="@{/form}"><input type="submit" value="New Post"
+			class="btn btn-dark "></a>
+	</div>
 	<div th:if="${not #lists.isEmpty(posts)}" class="container py-4">
 
 
 		<div class="card">
 
+			<div class="container button-create my-2">
+				<a th:href="@{/form}"><input type="submit" value="New Post"
+					class="btn btn-dark "></a>
+			</div>
+
 			<div th:each="post: ${posts}">
-				<div class="card-body col-12 col-sm-6">
+				<div class="card-body col-12 col-sm-8 bg-dark">
+				<div class ="ms-1">
+					<h5 class="card-tittle col-12 col-sm-8 text-white"
+						th:text="${post.titulo}"></h5>
+				</div>
 
-					<h5 class="card-tittle col-12 col-sm-8" th:text="${post.titulo}"></h5>
 					<div class="list-group">
-						<!-- <h6 class="list-group-item" th:text="${post.contenido}"></h6>  -->
 
+
+						<div class="list-group-item"
+							th:if="${(post.categoria!=null) && (post.categoria.length()>1) && !(post.categoria.equals('Select'))}">
+							<h6 class="col-12 col-sm-8 "
+								th:text="${'Category: ' + post.categoria}"></h6>
+						</div>
+						<div class="list-group-item"
+							th:if="${(post.imagen!=null) && (post.imagen.length()>1)}">
+							<img th:if="${(post.imagen!=null) && (post.imagen.length()>1)}"
+								th:src="@{'/uploads/'+${post.imagen}}" th:alt="${post.imagen}"
+								class="img-thumbnail rounded float float-left"
+								style="max-width: 25%;" />
+						</div>
 						<div class="list-group-item">
 							<h6 class="col-12 col-sm-8 "
 								th:text="${'Date of creation: ' + post.createAt}"></h6>
 						</div>
 						<div class="list-group-item">
+
 							<a th:href="@{'/detalle/'+${post.id}}"><input type="submit"
-								class="btn btn-secondary col-4 col-sm-3" value="Detail"></a>
-							<a th:href="@{'/form/'+${post.id}}"><input type="submit"
-								class="btn btn-primary col-4 col-sm-3" value="Edit"></a> 
-								
-				
-
-		
-		<form th:action="@{'/posts/'+${post.id}}" th:method="DELETE">
-		<input type="submit" id="deletePost" name="deletePost" value="Delete" class="btn btn-danger" th:attr="onclick=|deletePost('${post.id}')|" >
-		</form>
-
-					
-						
+								class="btn btn-secondary col-4 col-sm-3  my-1 " value="Detail"></a>
 						</div>
+						<div class="list-group-item">
+							<a th:href="@{'/form/'+${post.id}}"><input type="submit"
+								class="btn btn-primary col-4 col-sm-3  my-1 " value="Edit"></a>
+						</div>
+
+
+						<form th:action="@{'/posts/'+${post.id}}" th:method="DELETE">
+							<div class="fixed-right-4 text-end">
+								<input type="submit" id="deletePost" name="deletePost"
+									value="Delete" class="btn btn-danger col-4 col-sm-2 my-1 ">
+							</div>
+						</form>
+
+						<!-- <form th:action="@{'/posts/'+${post.id}}" th:method="PATCH">
+		<div class="form-group my-2">
+		<input type="text" name="patchPost" class="col-4 col-sm-3 rounded-1" th:placeholder="'Content'">
+		<button type="submit" id="patchContenido" name="patchPost" value="Contenido" class="btn btn-warning col-4 col-sm-3 text-white" >Update</button>
+		</div>
+	
+		</form>
+		<form th:action="@{'/posts/'+${post.id}}" th:method="PATCH">
+		<div class="form-group my-2">
+		
+		<input type="text" name="patchPost" class="col-4 col-sm-3 rounded-1"  th:placeholder="'Title'">
+	
+	
+		<button type="submit" id="patchTitulo" name="patchPost" value="Titulo" class="btn btn-warning col-4 col-sm-3 text-white" >Update</button>
+		
+		</div>
+		</form>
+		<form th:action="@{'/posts/'+${post.id}}" th:method="PATCH">
+		<div class="form-group my-2 row">
+		<div class="col  col-12 col-sm-3">
+		<select name="patchPost"  class="form-select"> 
+					<option value="Select">Select</option>
+					<option value="Movies" >Movies</option>
+					<option value="Sports" >Sports</option>
+					<option value="Series">Series</option>
+		</select> 
+		</div>
+		<div class="col">
+		<button type="submit" id="patchCategoria" name="patchPost" value="Categoria" class="btn btn-warning  col-4 col-sm-4 text-white" >Update</button>
+		</div>
+		</div>
+	
+		</form> -->
+
+
+
+
+
 					</div>
 				</div>
 			</div>
@@ -47,30 +113,10 @@
 
 		</div>
 	</div>
-	<div class="container button-create my-2">
-		<a th:href="@{/form}"><input type="submit" value="New Post"
-			class="btn btn-dark"></a>
-	</div>
-	
+
+
 
 	<div th:replace="layout/layout :: javascript"></div>
-							<script type="text/javascript">							
-function deletePost(id){
-$.ajax({
-                type: "DELETE",
-                url: "/posts"+id,
-                success: function (data) {
-                  console.log(data);
-                },
-                error: function () {
-                    
-                }
-                 
-            });
-            
-            
-}
 
-</script>
 </body>
 </html>

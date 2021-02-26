@@ -9,27 +9,35 @@
 	<div class="container py-4">
 
 		<div class="card bg-light">
-			<div class="card-header" th:text="${titulo}"></div>
-			<div class="card-body">
+			<div class="card-header text-white bg-dark fs-3" th:text="${titulo}"></div>
+			<div class="card-body  bg-dark">
 
 
-				<div class="list-group-item">
-
-					<h6 class="col-12 col-sm-8 "
-						th:text="${'Content: ' + post.contenido}"></h6>
-					<h6 th:if="${post.imagen!=null}" class="col-12 col-sm-8 "
-						th:text="${'Content: ' + post.contenido}"></h6>
-					<h6 th:if="${post.categoria!=null}" class="col-12 col-sm-8 "
-						th:text="${'Content: ' + post.contenido}"></h6>
-					<h6 class="col-12 col-sm-8 "
-						th:text="${'Date of creation: ' + post.createAt}"></h6>
+				<div class="list-group">	
+						
+					<ul>
+					
+					<li class="list-group-item"
+						th:text="${'Content: ' + post.contenido}"></li>
+					
+					<li th:if="${post.categoria!=null && (post.categoria.length()>1) && !(post.categoria.equals('Select'))}" 
+					class="list-group-item"
+						th:text="${'Category: ' + post.categoria}" ></li>
+					<li class="list-group-item"
+						th:text="${'Date of creation: ' + post.createAt}">	</li>
+						
+						<li class="list-group-item"> <img th:if="${(post.imagen!=null) && (post.imagen.length()>1)}" th:src="@{'/uploads/'+${post.imagen}}" 
+				th:alt="${post.imagen}" class="img-thumbnail rounded float float-right" style="max-width: 25%;"/>
+						</li>
+						
+						</ul>
 				</div>
 				<div class="list-group-item">
 
 					<a th:href="@{'/form/'+${post.id}}"><input type="submit"
-						class="btn btn-primary col-4 col-sm-3" value="Edit"></a> 
+						class="btn btn-primary col-4 col-sm-2 " value="Edit"></a> 
 			<form th:action="@{'/posts/'+${post.id}}" th:method="DELETE">
-		<input type="submit" id="deletePost" name="deletePost" value="Delete" class="btn btn-danger"  >
+		<input type="submit" id="deletePost" name="deletePost" value="Delete" class="btn btn-danger col-4 col-sm-2 my-2 " >
 		</form>
 				</div>
 
@@ -37,9 +45,9 @@
 		</div>
 
 	</div>
-	<div class="container button-create my-2">
-		<a th:href="@{/form}"><input type="submit" value="New Post"
-			class="btn btn-dark"></a>
+	<div class="container button-create text-end">
+		<a th:href="@{/form}" ><input type="submit" value="New Post"
+			class="btn btn-dark "></a>
 	</div>
 	<div th:replace="layout/layout :: javascript"></div>
 	
