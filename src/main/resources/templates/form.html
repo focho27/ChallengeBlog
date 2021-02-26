@@ -3,17 +3,27 @@
 <head th:replace="layout/layout :: head"></head>
 <body>
 	<header th:replace="layout/layout :: header"></header>
-	
-	
-	
+
+
+
 	<div th:object="${post}" th:remove="tag">
-					<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
-						<li th:each="err: ${#fields.errors('*')}" th:text="${err}"></li>
-					</ul>
-				</div>
-	<form th:action="@{/form}" th:object="${post}" method="post" enctype="multipart/form-data">
+		<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+			<li th:each="err: ${#fields.errors('*')}" th:text="${err}"></li>
+		</ul>
+	</div>
+
+	<div class="container py-4">
+
+		<div class="card bg-light">
+			<div class="card-header bg-dark text-white fs-3" th:text="${titulo}"></div>
+			<div class="card-body ">
+
+
+
+				<form th:action="@{/posts}" th:object="${post}" method="post"
+					enctype="multipart/form-data">
 					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">Title</label>
+						<label class="col-sm-3 col-form-label  fw-bold">Title</label>
 						<div class="col-sm-6">
 							<input type="text" th:field="*{titulo}" class="form-control"
 								th:errorclass="'form-control alert-danger'" /> <small
@@ -21,32 +31,63 @@
 								th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"></small>
 						</div>
 					</div>
-					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">Content</label>
+					<div class="form-group row my-1">
+						<label class="col-sm-3 col-form-label   fw-bold">Content</label>
 						<div class="col-sm-6">
 							<input type="text" th:field="*{contenido}" class="form-control"
 								th:errorclass="'form-control alert-danger'" /> <small
 								class="form-text text-danger"
-								th:if="${#fields.hasErrors('contenido')}" th:errors="*{contenido}"></small>
+								th:if="${#fields.hasErrors('contenido')}"
+								th:errors="*{contenido}"></small>
 						</div>
 					</div>
-					<div th:if="${post.id==null}">
-					<div class="form-group row">
+
+					<div class="form-group row my-1">
+						<label class="col-sm-3 col-form-label   fw-bold">Category</label>
 						<div class="col-sm-6">
-							<input type="submit" value="Create Post" class="btn btn-secondary" />
+
+							<select name="categoria" th:field="*{categoria}"
+								class="form-control" th:errorclass="'form-control alert-danger'">
+								<option value="Select">Select</option>
+								<option value="Movies">Movies</option>
+								<option value="Sports" selected>Sports</option>
+								<option value="Series">Series</option>
+							</select>
 						</div>
 					</div>
+
+					<div class="form-group row my-1">
+						<label for="file" class="col-sm-3 col-form-label  fw-bold">Image</label>
+						<div class="col-sm-6">
+							<input type="file" name="file" class="form-control bg-secondary" />
+						</div>
+					</div>
+
+					<div th:if="${post.id==null}">
+						<div class="form-group row">
+							<div class="col-sm-6 my-3 text-end">
+								<input type="submit" value="Create Post"
+									class="btn btn-secondary " />
+							</div>
+						</div>
 					</div>
 					<div th:if="${post.id!=null}">
-					<div class="form-group row">
-						<div class="col-sm-6">
-							<input type="submit" value="Edit Post" class="btn btn-secondary" />
+
+						<div class="form-group row">
+							<div class="col-sm-6 ">
+								<button th:href="@{'/posts/'+${post.id}}" type="submit"
+									id="patchPost" name="patchPost" value="Categoria"
+									class="btn btn-warning  col-4 col-sm-4 text-white my-3 ">Update</button>
+							</div>
 						</div>
 					</div>
-					</div>
+
 				</form>
-	
-	
+
+
+			</div>
+		</div>
+	</div>
 	<div th:replace="layout/layout :: javascript"></div>
 </body>
 </html>

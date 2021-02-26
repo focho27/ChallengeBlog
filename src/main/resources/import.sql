@@ -1,1 +1,3 @@
-INSERT INTO posts (titulo, contenido, imagen, categoria, create_at) VALUES('Movie', 'Harry Potter',null, null,NOW());
+INSERT INTO posts (titulo, contenido, imagen, categoria, create_at) VALUES('Movie Info', 'Harry Potter is the best movie of history','', 'Movies',NOW());
+INSERT INTO posts (titulo, contenido, imagen, categoria, create_at) VALUES('Football Info', 'Maradona is the best player football of history','', 'Sports',NOW());
+INSERT INTO posts (titulo, contenido, imagen, categoria, create_at) VALUES('Series Info', 'La casa de papel is the best serie of history','', 'Sports',NOW());

@@ -3,28 +3,23 @@
 <head th:replace="layout/layout :: head"></head>
 <body>
 	<header th:replace="layout/layout :: header"></header>
-	<div class = "container py-4">
-	<h1 th:text="${titulo}"></h1>
-	
-	
+	<div class="container py-4">
+		<h1 th:text="${titulo}"></h1>
 
-	<form th:action="@{/formI/}"  method="get">
-	<div class="form-group row">
-	<label for="buscarPorId" class="col-form-label"></label>
-	<input type="number" name="buscarPorId" id="buscarPorId" class="bg-secondary text-color-white" />
-	<button type="submit" class="btn btn-dark" >Search</button>
+		<form th:action="@{/formI/}" method="get">
+			<div class="form-group row">
+				<label for="buscarPorId" class="col-form-label"></label> <input
+					type="number" name="buscarPorId" id="buscarPorId"
+					class="col-8 col-sm-3" th:placeholder="'Write id'" />
+				<button   type="submit"
+					class="btn btn-primary col-4 col-sm-4 float-sm-end">Search</button>
+			</div>
+		</form>
+
 	</div>
-	</form>
-	
-<!--'/formId/{id}'(id=$('#buscarPorId').val())-->
-
-	
-	</div>
-	
-
 
 	<div th:replace="layout/layout :: javascript"></div>
-	
+
 	<div></div>
 </body>
 </html>
